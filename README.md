@@ -1,7 +1,7 @@
 # Guía de sonido
 
 Guía gratuita para quienes operan sistemas de sonido convencionales en iglesias y lugares chicos.
-Es una sola página estática (`public/index.html`), sin servidor ni base de datos.
+Es una sola página estática (`docs/index.html`), sin servidor ni base de datos.
 
 ## Contenido
 
@@ -14,13 +14,17 @@ Es una sola página estática (`public/index.html`), sin servidor ni base de dat
 1. Crear el proyecto en la consola de Firebase y activar Hosting.
 2. Instalar las herramientas: `npm install -g firebase-tools` y `firebase login`.
 3. Dentro de esta carpeta: `firebase init hosting:github`.
-   - Carpeta pública: `public`.
+   - Carpeta pública: `docs`.
    - Single-page app: **No**.
    - Elegir este repositorio y publicar automáticamente al hacer merge en la rama principal.
 4. Cada cambio subido a la rama principal se publica solo.
 
-Para probarlo en local: abrir `public/index.html` en el navegador.
+Para probarlo en local: abrir `docs/index.html` en el navegador.
 
 ## Editar
 
-Todo el contenido (textos, estilos, scripts e imágenes) está dentro de `public/index.html`.
+Todo el contenido (textos, estilos, scripts e imágenes) está dentro de `docs/index.html`.
+
+## Publicar con GitHub Pages
+
+En el repositorio: Settings → Pages → Source: "Deploy from a branch" → rama `main`, carpeta `/docs`.
