@@ -371,6 +371,9 @@ details.help p{margin:0 0 8px;max-width:62ch}
 .b-avg{position:absolute;left:24px;width:26px;height:3px;background:#fff;border-radius:2px;box-shadow:0 0 0 1px #000;transform:translateY(50%);pointer-events:none}
 .console.band .mod.ch{flex:1 1 150px}
 .console.band .mod.inf{flex:2 1 220px}
+.success.stick{position:sticky;bottom:12px;z-index:6;box-shadow:0 8px 28px rgba(0,0,0,.35)}
+.mod.inf.hit{background:var(--ok);color:var(--ok-ink);box-shadow:0 0 0 3px var(--ok)}
+.mod.inf.hit .mod-title,.mod.inf.hit .b-goal span,.mod.inf.hit .b-goal strong,.mod.inf.hit .note-mini{color:var(--ok-ink)}
 .b-goal{display:flex;flex-direction:column;gap:2px;text-align:center}
 .b-goal strong{font-family:var(--font-mono);font-weight:500;font-size:1.02rem;color:var(--led-g)}
 .b-goal span{font-size:.82rem;color:var(--panel-mute)}
@@ -733,7 +736,7 @@ footer{font-size:.9rem;color:var(--muted);border-top:1px solid var(--line);paddi
         <p class="note" id="con-note"></p>
         <div class="hint" id="sim-hint" aria-live="polite"></div>
         <div class="row-actions"><button class="btn ghost sm" id="sim-solve" type="button" hidden>Mostrame cómo queda</button></div>
-        <div class="success" id="sim-ok" role="status" hidden>
+        <div class="success stick" id="sim-ok" role="status" hidden>
           <span class="succ-ic" aria-hidden="true">✓</span>
           <div class="succ-tx"><strong>¡Ajuste correcto!</strong><span id="sim-ok-sub"></span></div>
           <button class="btn" id="sim-next" type="button">Siguiente ejercicio</button>
@@ -815,7 +818,7 @@ footer{font-size:.9rem;color:var(--muted);border-top:1px solid var(--line);paddi
           <button class="btn ghost sm" id="b-solve" type="button" hidden>Mostrame cómo queda</button>
           <button class="btn ghost sm" id="b-rand" type="button">Otro instrumento al azar</button>
         </div>
-        <div class="success" id="b-ok" role="status" hidden>
+        <div class="success stick" id="b-ok" role="status" hidden>
           <span class="succ-ic" aria-hidden="true">✓</span>
           <div class="succ-tx"><strong>¡Canal bien ajustado!</strong><span id="b-ok-sub"></span></div>
           <button class="btn" id="b-next" type="button">Siguiente instrumento</button>
@@ -1870,6 +1873,8 @@ function renderBand(){
   else{h=now+'. Bajá la ganancia '+bAmt(d)+' para que '+(rms?'ronde ':'lleguen a ')+bF(rms?-20:-10)+'.';}
   var hb=document.getElementById('b-hint');hb.textContent=h;hb.hidden=good;
   document.getElementById('b-ok').hidden=!good;
+  var gm=document.getElementById('b-goal').parentNode;gm.classList.toggle('hit',good);
+  if(good){document.getElementById('b-goal').innerHTML='<strong>✓ ¡Listo!</strong><span>El ajuste está en el objetivo</span>';}
   if(good){
     document.getElementById('b-ok-sub').textContent=(rms?'La barra ronda '+bF(L.avg)+'.':'Los golpes llegan a '+bF(L.pk)+'.')+(BS.assisted?'':' Este canal quedó marcado como logrado.');
   }
