@@ -414,6 +414,9 @@ details.help p{margin:0 0 8px;max-width:62ch}
 .contact-actions a.btn.ghost{background:transparent;color:var(--accent);border:1.5px solid var(--accent)}
 :root[data-motion="off"] *,:root[data-motion="off"] *::before,:root[data-motion="off"] *::after{animation:none!important;transition:none!important}
 .hdbtns{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.like{display:flex;flex-direction:column;gap:8px}
+.like-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.like-n{color:var(--muted);font-size:.95rem}
 footer{font-size:.9rem;color:var(--muted);border-top:1px solid var(--line);padding-top:14px;display:flex;flex-direction:column;gap:6px}
 @media all{.fill{transition:width .4s ease}}
 </style>
@@ -494,6 +497,13 @@ footer{font-size:.9rem;color:var(--muted);border-top:1px solid var(--line);paddi
         <div><dt>dBFS</dt><dd>La escala de los medidores digitales. El 0 es el tope: lo que pase de ahí distorsiona.</dd></div>
       </dl>
     </details>
+    <div class="card like" id="like-card">
+      <h3>¿Te sirvió la guía?</h3>
+      <div class="like-row">
+        <button class="btn ghost" id="like-btn" type="button" aria-pressed="false">👍 Me sirvió</button>
+        <span class="like-n" id="like-n" aria-live="polite"></span>
+      </div>
+    </div>
     <div class="card contact" id="contacto">
       <h3>¿Necesitas ayuda con tu equipo?</h3>
       <p class="lead">Esta guía es gratuita. Si quieres que revise tu sistema o te acompañe con el ajuste, escríbeme.</p>
@@ -2062,6 +2072,26 @@ document.addEventListener('click',function(e){
 
 /* tema claro u oscuro */
 var root=document.documentElement,tbtn=document.getElementById('theme-btn');
+/* contador de visitas y botón "Me sirvió" (abacus.jasoncameron.dev: sin cuenta ni cookies; solo cuenta en el sitio publicado) */
+(function(){
+  var NS='guia-sonido-pablolec1989',API='https://abacus.jasoncameron.dev/',live=/\.github\.io$/.test(location.hostname);
+  function call(op,key,cb){
+    try{fetch(API+op+'/'+NS+'/'+key).then(function(r){return r.json();}).then(function(j){if(cb&&typeof j.value==='number'){cb(j.value);}}).catch(function(){});}catch(e){}
+  }
+  var btn=document.getElementById('like-btn'),num=document.getElementById('like-n');
+  function showN(v){num.textContent=v===1?'1 persona dijo que le sirvió':v+' personas dijeron que les sirvió';}
+  function voted(){btn.setAttribute('aria-pressed','true');btn.textContent='👍 ¡Gracias!';}
+  if(!live){document.getElementById('like-card').hidden=true;return;}
+  if(LS.get('visited')!==true){LS.set('visited',true);call('hit','visitantes');}
+  try{if(!sessionStorage.getItem('gs_sesion')){sessionStorage.setItem('gs_sesion','1');call('hit','visitas');}}catch(e){}
+  if(LS.get('liked')===true){voted();}
+  call('get','likes',function(v){if(v>0){showN(v);}});
+  btn.addEventListener('click',function(){
+    if(LS.get('liked')===true){return;}
+    LS.set('liked',true);voted();
+    call('hit','likes',showN);
+  });
+})();
 /* movimiento: activado por defecto; el botón lo apaga (medidores y dibujos quedan quietos) */
 (function(){
   var mb=document.getElementById('motion-btn'),on=LS.get('motion')!==false;
