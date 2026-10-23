@@ -219,6 +219,7 @@ select{
 .goals .mk{flex:none;width:22px;height:22px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:.8rem;line-height:1;color:transparent}
 .goals li.yes .mk{background:var(--g);border-color:var(--g);color:var(--bg)}
 .hint{border-left:4px solid var(--accent);background:var(--accent-soft);border-radius:6px;padding:10px 12px;font-size:1rem}
+.hint.stick{position:sticky;bottom:12px;z-index:5;box-shadow:0 6px 22px rgba(0,0,0,.3);border-left-width:6px}
 .hint.good{border-left-color:var(--g);background:var(--g-bg)}
 .success{display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:var(--ok);color:var(--ok-ink);border-radius:14px;padding:16px 18px}
 .succ-ic{flex:none;width:48px;height:48px;border-radius:50%;background:var(--ok-ink);color:var(--ok);display:grid;place-items:center;font-size:1.7rem;font-weight:800;line-height:1}
@@ -736,7 +737,7 @@ footer{font-size:.9rem;color:var(--muted);border-top:1px solid var(--line);paddi
           </div>
         </div>
         <p class="note" id="con-note"></p>
-        <div class="hint" id="sim-hint" aria-live="polite"></div>
+        <div class="hint stick" id="sim-hint" aria-live="polite"></div>
         <div class="row-actions"><button class="btn ghost sm" id="sim-solve" type="button" hidden>Mostrame cómo queda</button></div>
         <div class="success stick" id="sim-ok" role="status" hidden>
           <span class="succ-ic" aria-hidden="true">✓</span>
@@ -810,7 +811,7 @@ footer{font-size:.9rem;color:var(--muted);border-top:1px solid var(--line);paddi
           </div>
         </div>
         <p class="note" id="b-con-note"></p>
-        <div class="hint" id="b-hint" aria-live="polite"></div>
+        <div class="hint stick" id="b-hint" aria-live="polite"></div>
         <div class="pop" id="b-pop" role="alert" hidden>
           <strong>Mucha ganancia para una voz</strong>
           <p>Estás usando más de +30 dB de ganancia. No es una regla, es una advertencia: con tanta ganancia también se amplifican el ruido del salón y el riesgo de acople (el chillido). Conviene pedirle al cantante o al orador que acerque el micrófono a la boca.</p>
