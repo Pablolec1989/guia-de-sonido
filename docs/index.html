@@ -621,7 +621,7 @@ footer{font-size:.9rem;color:var(--muted);border-top:1px solid var(--line);paddi
   <div id="s-ajuste" class="section" role="tabpanel" aria-labelledby="m-ajuste">
     <div class="intro">
       <h2>Ajuste de nivel del sistema</h2>
-      <p class="lead">La consola trabaja en su punto de referencia (lo que se llama “ganancia unitaria”: la señal ni sube ni baja) y el volumen final se decide en el amplificador o en los altavoces activos. Es un punto de partida: después se afina de oído.</p>
+      <p class="lead">La consola trabaja en su punto de referencia (lo que se llama “ganancia unitaria”: la señal ni sube ni baja) y el volumen final se decide en el amplificador o en los altavoces activos. Es un punto de partida: después se afina de oído. Los valores de referencia (0 dBu, −18 dBFS, faders en 0 dB) son aproximados: una diferencia de unos ±2 dB se considera válida.</p>
     </div>
 
     <div class="card">
@@ -1223,7 +1223,7 @@ function stepsFor(c,a){
   s1.push('Confirmá que las conexiones son correctas (usá el módulo Señales y conexiones).');
 
   var s3=[
-    'Poné el fader del canal de la música en 0 dB (la marca 0 o U). Hacé lo mismo con el fader Main L/R.',
+    'Poné el fader del canal de la música en 0 dB (la marca 0 o U). Hacé lo mismo con el fader Main L/R. Una diferencia de ±2 dB está bien: no hace falta clavar el valor exacto.',
     'Con la música sonando, subí la ganancia (gain o trim) del canal hasta que el medidor llegue a '+target+' en los momentos más fuertes.',
     'Revisá que el medidor del Main L/R esté en la misma zona y que no se encienda '+clip+'.'
   ];
@@ -1506,7 +1506,7 @@ function renderSim(){
 
   var tg=c.dig?'−18 dBFS':'0';
   var goals=[
-   [okF,'Faders del canal y del Main en 0 dB'],
+   [okF,'Faders del canal y del Main cerca de 0 dB (±2 dB está bien)'],
    [okG,'Medidor del canal: los picos llegan cerca de '+tg+' (unos dB de margen están bien) sin saturar'],
    [okL,'Volumen adecuado para el salón, decidido en '+(ap==='active'?'el altavoz activo':'el amplificador')]
   ];
@@ -1516,10 +1516,10 @@ function renderSim(){
 
   var led=c.dig?'CLIP':'PEAK',h,good=false;
   if(clipP){h='El medidor del canal está saturando ('+led+'). Bajá la ganancia del canal hasta que los picos lleguen al objetivo.';}
-  else if(clipM){h='El Main está saturando. Poné los faders en 0 dB.';}
-  else if(SIM.fmain>2){h='El fader Main está arriba de 0 dB. Subirlo para ganar volumen es el error más común. Dejalo en 0 dB y subí '+ampPhrase()+'.';}
-  else if(SIM.fmain<-2){h='El fader Main está abajo de 0 dB. Dejalo en 0 dB (ganancia unitaria).';}
-  else if(Math.abs(SIM.fch)>2){h='El fader del canal no está en 0 dB. Dejalo en 0 dB y ajustá la ganancia del canal.';}
+  else if(clipM){h='El Main está saturando. Poné los faders cerca de 0 dB.';}
+  else if(SIM.fmain>2){h='El fader Main está más de 2 dB arriba de 0. Subirlo para ganar volumen es el error más común. Dejalo cerca de 0 dB (±2 dB está bien) y subí '+ampPhrase()+'.';}
+  else if(SIM.fmain<-2){h='El fader Main está más de 2 dB abajo de 0. Dejalo cerca de 0 dB (ganancia unitaria, ±2 dB está bien).';}
+  else if(Math.abs(SIM.fch)>2){h='El fader del canal está a más de 2 dB de 0. Dejalo cerca de 0 dB (±2 dB está bien) y ajustá la ganancia del canal.';}
   else if(q.p>4){h='La señal llega demasiado fuerte al canal. Bajá la ganancia hasta que los picos lleguen al objetivo ('+tg+').';}
   else if(q.p<-6){h='La señal llega débil. Subí la ganancia del canal hasta que los picos lleguen al objetivo ('+tg+').';}
   else if(SIM.vol<=0){h='La consola está bien. Subí '+ampPhrase()+' de a poco.';}
