@@ -758,8 +758,8 @@ footer{font-size:.9rem;color:var(--muted);border-top:1px solid var(--line);paddi
         <p class="lead">Cada instrumento entra por su propio canal y se ajusta con la ganancia (gain), con el fader del canal en 0 dB. Mientras el músico toca fuerte, como en la canción, mirás el medidor. </p>
         <p class="warn"><b>Por qué no todos llegan al mismo punto:</b> el oído juzga cuánto suena algo por su nivel promedio (el RMS), no por su pico más alto.</p>
         <ul class="goals">
-          <li><span><b>Suenan todo el tiempo</b> (voz, teclado, guitarras, bajo, overhead): su promedio está cerca de su pico. Se ajustan por el promedio, con el pico bastante por debajo del tope.</span></li>
-          <li><span><b>De golpe</b> (bombo, caja, toms, cajón): el pico es muy alto pero dura una fracción de segundo, así que el promedio es bajo y se oyen flojos. Para que se sientan parejos con los demás, se deja subir el pico mucho más arriba, cerca del tope, sin llegar a saturar (picos de hasta unos −10 dBFS).</span></li>
+          <li><span><b>Sostenidos</b> (voz, teclado, guitarras, bajo, overhead): suenan casi todo el tiempo y su promedio está cerca de su pico. Se ajustan por el promedio, con el pico bastante por debajo del tope.</span></li>
+          <li><span><b>Percusivos</b> (bombo, caja, toms, cajón): el pico es muy alto pero dura una fracción de segundo, así que el promedio es bajo y se oyen flojos. Para que se sientan parejos con los demás, se deja subir el pico mucho más arriba, cerca del tope, sin llegar a saturar (picos de hasta unos −10 dBFS).</span></li>
         </ul>
         <p class="note">Si el pico del bombo quedara al mismo nivel que el de una voz, el bombo sonaría mucho más débil. Además, el medidor de la consola promedia unos 300 milisegundos y no alcanza a mostrar el pico real de un golpe corto, por eso cada instrumento tiene su propio objetivo.</p>
         <p class="note" id="b-map"></p>
@@ -767,8 +767,8 @@ footer{font-size:.9rem;color:var(--muted);border-top:1px solid var(--line);paddi
 
       <div class="card">
         <div class="prog-top"><h3>Elegí un instrumento</h3><div class="row-actions"><span class="score" id="band-score"></span><button class="btn ghost sm" id="band-reset" type="button">Reiniciar completados</button></div></div>
-        <div class="grp"><span class="grp-lab">Suenan todo el tiempo</span><div class="insts" id="chips-rms" role="group" aria-label="Instrumentos sostenidos"></div></div>
-        <div class="grp"><span class="grp-lab">De golpe</span><div class="insts" id="chips-peak" role="group" aria-label="Instrumentos de golpe"></div></div>
+        <div class="grp"><span class="grp-lab">Sostenido</span><div class="insts" id="chips-rms" role="group" aria-label="Instrumentos sostenidos"></div></div>
+        <div class="grp"><span class="grp-lab">Percusivo</span><div class="insts" id="chips-peak" role="group" aria-label="Instrumentos percusivos"></div></div>
         <div class="instrow"><div class="instfig" id="b-fig"></div><p class="tipbox" id="b-tip"></p></div>
         <ul class="goals" id="b-goals"></ul>
       </div>
@@ -1850,7 +1850,7 @@ function renderBand(){
   document.getElementById('b-map').textContent=dig
     ?'En tu consola digital leés los valores directamente en dBFS.'
     :'En una consola analógica, la marca 0 del medidor equivale a unos −18 dBFS, así que −10 dBFS se ve como +8 en su escala.';
-  document.getElementById('b-goal').innerHTML=rms?'<strong>Barra rondando '+bF(-20)+'</strong><span>Suena todo el tiempo, por eso va más abajo</span>':'<strong>Golpes hasta '+bF(-10)+'</strong><span>Son cortos, por eso pueden llegar más arriba</span>';
+  document.getElementById('b-goal').innerHTML=rms?'<strong>Barra rondando '+bF(-20)+'</strong><span>Sostenido: suena casi todo el tiempo, por eso va más abajo</span>':'<strong>Golpes hasta '+bF(-10)+'</strong><span>Percusivo: son golpes cortos, por eso pueden llegar más arriba</span>';
   var sco=document.getElementById('scope'),key=(dig?'d':'a')+I.id;
   if(sco.getAttribute('data-k')!==key){sco.setAttribute('data-k',key);sco.innerHTML=bScopeSvg(c,I);}
   /* objetivos y consejo */
