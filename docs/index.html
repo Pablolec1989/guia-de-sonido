@@ -724,7 +724,7 @@ footer{font-size:.9rem;color:var(--muted);border-top:1px solid var(--line);paddi
               <div class="figwrap"><div class="fig" id="fig"></div><span class="knob-lab">Oyente</span></div>
             </div>
             <span class="lcd" id="val-l"></span>
-            <span class="note-mini">La barra verde marca el volumen adecuado</span>
+            <span class="note-mini">La zona verde del medidor marca el volumen adecuado</span>
           </div>
         </div>
         <p class="note" id="con-note"></p>
@@ -1844,25 +1844,25 @@ function renderBand(){
   var popOn=(I.id==='voz'&&SIM.bgain>30);
   if(!popOn){BS.popOff=false;}
   document.getElementById('b-pop').hidden=!(popOn&&!BS.popOff);
-  document.getElementById('b-type').textContent=rms?'Mirá dónde ronda la barra la mayor parte del tiempo, no el salto más alto.':'Mirá hasta dónde llega cada golpe: ese tope tiene que quedar en '+bF(-10)+'.';
+  document.getElementById('b-type').textContent=rms?'Mirá dónde ronda el medidor la mayor parte del tiempo, no el salto más alto.':'Mirá hasta dónde llega cada golpe: ese tope tiene que quedar en '+bF(-10)+'.';
   document.getElementById('b-con-note').textContent=dig
-    ?'Consola digital: el medidor está en dBFS y promedia unos 300 milisegundos, así que no muestra el pico real de un golpe corto. Por eso en los golpes el aviso CLIP puede encenderse aunque la barra no llegue arriba.'
-    :'Consola analógica: el medidor no dice dBFS y también promedia unos 300 milisegundos, así que no muestra el pico real de un golpe corto: el aviso PEAK puede encenderse aunque la barra no llegue arriba. Su marca 0 equivale a unos −18 dBFS.';
+    ?'Consola digital: el medidor está en dBFS y promedia unos 300 milisegundos, así que no muestra el pico real de un golpe corto. Por eso en los golpes el aviso CLIP puede encenderse aunque el medidor no llegue arriba.'
+    :'Consola analógica: el medidor no dice dBFS y también promedia unos 300 milisegundos, así que no muestra el pico real de un golpe corto: el aviso PEAK puede encenderse aunque el medidor no llegue arriba. Su marca 0 equivale a unos −18 dBFS.';
   document.getElementById('b-map').textContent=dig
     ?'En tu consola digital leés los valores directamente en dBFS.'
     :'En una consola analógica, la marca 0 del medidor equivale a unos −18 dBFS, así que −10 dBFS se ve como +8 en su escala.';
-  document.getElementById('b-goal').innerHTML=rms?'<strong>Barra rondando '+bF(-20)+'</strong><span>Armónico: suena casi todo el tiempo, por eso va más abajo</span>':'<strong>Golpes hasta '+bF(-10)+'</strong><span>Percusivo: son golpes cortos, por eso pueden llegar más arriba</span>';
+  document.getElementById('b-goal').innerHTML=rms?'<strong>Medidor rondando '+bF(-20)+'</strong><span>Armónico: suena casi todo el tiempo, por eso va más abajo</span>':'<strong>Golpes hasta '+bF(-10)+'</strong><span>Percusivo: son golpes cortos, por eso pueden llegar más arriba</span>';
   var sco=document.getElementById('scope'),key=(dig?'d':'a')+I.id;
   if(sco.getAttribute('data-k')!==key){sco.setAttribute('data-k',key);sco.innerHTML=bScopeSvg(c,I);}
   /* objetivos y consejo */
   var goals=[];
-  goals.push([ok,rms?'La barra ronda '+bF(-20)+' la mayor parte del tiempo':'Cada golpe llega hasta '+bF(-10)]);
+  goals.push([ok,rms?'El medidor ronda '+bF(-20)+' la mayor parte del tiempo':'Cada golpe llega hasta '+bF(-10)]);
   goals.push([!clip,'El aviso '+led+' se mantiene apagado']);
   document.getElementById('b-goals').innerHTML=goals.map(function(g){
     return '<li class="'+(g[0]?'yes':'')+'"><span class="mk" aria-hidden="true">✓</span><span>'+esc(g[1])+(g[0]?' (listo)':'')+'</span></li>';
   }).join('');
-  var h,good=BS.shown&&ok,d=rms?(-20-L.avg):(-10-L.pk),now=rms?'La barra ronda '+bF(L.avg):'Los golpes llegan a '+bF(L.pk),aim=rms?'ronde '+bF(-20):'lleguen a '+bF(-10);
-  if(clip){h='Se enciende '+led+': la señal se está recortando, aunque la barra no llegue arriba. Bajá la ganancia '+bAmt(d)+' para que '+(rms?'la barra ronde '+bF(-20):'los golpes lleguen a '+bF(-10))+'.';}
+  var h,good=BS.shown&&ok,d=rms?(-20-L.avg):(-10-L.pk),now=rms?'El medidor ronda '+bF(L.avg):'Los golpes llegan a '+bF(L.pk),aim=rms?'ronde '+bF(-20):'lleguen a '+bF(-10);
+  if(clip){h='Se enciende '+led+': la señal se está recortando, aunque el medidor no llegue arriba. Bajá la ganancia '+bAmt(d)+' para que '+(rms?'el medidor ronde '+bF(-20):'los golpes lleguen a '+bF(-10))+'.';}
   else if(ok){h=good?'Canal ajustado. Probá con otro instrumento.':(rms?'Vas muy bien. Dejá la ganancia quieta unos segundos y mirá el medidor.':'Vas muy bien. Dejá la ganancia quieta y esperá algunos golpes para confirmar.');}
   else if(d>0){h=now+'. Subí la ganancia '+bAmt(d)+' para que '+(rms?'ronde ':'lleguen a ')+bF(rms?-20:-10)+'.';}
   else{h=now+'. Bajá la ganancia '+bAmt(d)+' para que '+(rms?'ronde ':'lleguen a ')+bF(rms?-20:-10)+'.';}
@@ -1871,7 +1871,7 @@ function renderBand(){
   var gm=document.getElementById('b-goal').parentNode;gm.classList.toggle('hit',good);
   if(good){document.getElementById('b-goal').innerHTML='<strong>✓ ¡Listo!</strong><span>El ajuste está en el objetivo</span>';}
   if(good){
-    document.getElementById('b-ok-sub').textContent=(rms?'La barra ronda '+bF(L.avg)+'.':'Los golpes llegan a '+bF(L.pk)+'.')+(BS.assisted?'':' Este canal quedó marcado como logrado.');
+    document.getElementById('b-ok-sub').textContent=(rms?'El medidor ronda '+bF(L.avg)+'.':'Los golpes llegan a '+bF(L.pk)+'.')+(BS.assisted?'':' Este canal quedó marcado como logrado.');
   }
   document.getElementById('b-solve').hidden=good||BS.tries<8;
   updateBPlate();updateChips();
