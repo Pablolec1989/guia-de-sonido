@@ -359,6 +359,7 @@ details.help p{margin:0 0 8px;max-width:62ch}
 .type.pk{border-top:5px solid var(--y)}
 .grp{display:flex;flex-direction:column;gap:6px}
 .grp-lab{font-weight:600;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.grp-lab em{font-style:normal;font-weight:400;text-transform:none;letter-spacing:0}
 .insts{display:flex;flex-wrap:wrap;gap:8px}
 .inst{font:inherit;font-weight:600;min-height:48px;padding:8px 14px;border-radius:10px;border:2px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;display:flex;align-items:center;gap:8px}
 .inst[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
@@ -767,8 +768,8 @@ footer{font-size:.9rem;color:var(--muted);border-top:1px solid var(--line);paddi
 
       <div class="card">
         <div class="prog-top"><h3>Elegí un instrumento</h3><div class="row-actions"><span class="score" id="band-score"></span><button class="btn ghost sm" id="band-reset" type="button">Reiniciar completados</button></div></div>
-        <div class="grp"><span class="grp-lab">Armónico</span><div class="insts" id="chips-rms" role="group" aria-label="Instrumentos armónicos"></div></div>
-        <div class="grp"><span class="grp-lab">Percusivo</span><div class="insts" id="chips-peak" role="group" aria-label="Instrumentos percusivos"></div></div>
+        <div class="grp"><span class="grp-lab">Armónico <em>(mantienen un promedio de señal constante)</em></span><div class="insts" id="chips-rms" role="group" aria-label="Instrumentos armónicos"></div></div>
+        <div class="grp"><span class="grp-lab">Percusivo <em>(poseen picos de señal abruptos)</em></span><div class="insts" id="chips-peak" role="group" aria-label="Instrumentos percusivos"></div></div>
         <div class="instrow"><div class="instfig" id="b-fig"></div><p class="tipbox" id="b-tip"></p></div>
         <ul class="goals" id="b-goals"></ul>
       </div>
