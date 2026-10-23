@@ -206,6 +206,7 @@ select{
 .astep-title{font-family:var(--font-display);font-weight:600;font-size:1.1rem;flex:1;min-width:0}
 .chk{display:flex;align-items:center;gap:8px;font-size:.95rem;cursor:pointer;min-height:44px;padding:0 4px}
 .chk input{width:22px;height:22px;accent-color:var(--accent)}
+.xlink{color:var(--accent);font-weight:600;text-decoration:underline;text-underline-offset:2px}
 .astep ul{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px;max-width:62ch}
 .astep .ok-line{background:var(--g-bg);border-left:4px solid var(--g);border-radius:6px;padding:8px 12px;font-size:.98rem}
 .astep .err-line{background:var(--y-bg);border-left:4px solid var(--y);border-radius:6px;padding:8px 12px;font-size:.98rem}
@@ -1315,16 +1316,17 @@ function renderChain(a){
    ?'En un mixer con amplificador incorporado, a veces no hay una perilla aparte para el amplificador y el fader Main cumple esa función.'
    :'Todo lo anterior al amplificador queda a nivel nominal. El volumen para el público se sube al final.';
 }
+function lk(x){return esc(x).replace(/Señales y conexiones/g,'<a href="#conexiones" class="xlink" data-go="conexiones:reconocer">Señales y conexiones</a>');}
 function renderSteps(){
   var S=stepsFor(cfgC.value,cfgA.value);
   document.getElementById('asteps').innerHTML=S.map(function(s,i){
     return '<li class="astep" data-i="'+i+'">'
      +'<div class="astep-head"><span class="num">'+(i+1)+'</span><span class="astep-title">'+esc(s.t)+'</span>'
      +'<label class="chk"><input type="checkbox" data-i="'+i+'"'+(doneSt[i]?' checked':'')+'> Hecho</label></div>'
-     +'<div class="block"><h3>Qué hacer</h3><ul>'+s.d.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul></div>'
-     +'<div class="block"><h3>Por qué</h3><p>'+esc(s.why)+'</p></div>'
-     +'<div class="ok-line"><b>Señal de que está bien</b>'+esc(s.ok)+'</div>'
-     +'<div class="err-line"><b>Error común</b>'+esc(s.err)+'</div>'
+     +'<div class="block"><h3>Qué hacer</h3><ul>'+s.d.map(function(x){return '<li>'+lk(x)+'</li>';}).join('')+'</ul></div>'
+     +'<div class="block"><h3>Por qué</h3><p>'+lk(s.why)+'</p></div>'
+     +'<div class="ok-line"><b>Señal de que está bien</b>'+lk(s.ok)+'</div>'
+     +'<div class="err-line"><b>Error común</b>'+lk(s.err)+'</div>'
      +'</li>';
   }).join('');
   refreshState();
@@ -2065,7 +2067,7 @@ arrows(document.querySelector('nav[aria-label="Secciones"]'),tabs);
 arrows(document.querySelector('nav[aria-label="Ajuste de nivel del sistema"]'),atabs);
 document.addEventListener('click',function(e){
   var g=e.target.closest&&e.target.closest('[data-go]');
-  if(g){go(g.getAttribute('data-go'),g.getAttribute('data-scroll')==='1');return;}
+  if(g){if(g.tagName==='A'){e.preventDefault();}go(g.getAttribute('data-go'),g.getAttribute('data-scroll')==='1');return;}
   var x=e.target.closest&&e.target.closest('.ex');
   if(x){selS.value=x.getAttribute('data-s');selD.value=x.getAttribute('data-d');renderCompat();go('conexiones:compatibilidad');}
 });
