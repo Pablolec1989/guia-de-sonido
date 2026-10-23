@@ -371,6 +371,8 @@ details.help p{margin:0 0 8px;max-width:62ch}
 .b-avg{position:absolute;left:24px;width:26px;height:3px;background:#fff;border-radius:2px;box-shadow:0 0 0 1px #000;transform:translateY(50%);pointer-events:none}
 .console.band .mod.ch{flex:1 1 150px}
 .console.band .mod.inf{flex:2 1 220px}
+.console.okall .mod{box-shadow:0 0 0 3px var(--ok)}
+.console.okall .mod-title::after{content:' ✓';color:var(--led-g)}
 .success.stick{position:sticky;bottom:12px;z-index:6;box-shadow:0 8px 28px rgba(0,0,0,.35)}
 .mod.inf.hit{background:var(--ok);color:var(--ok-ink);box-shadow:0 0 0 3px var(--ok)}
 .mod.inf.hit .mod-title,.mod.inf.hit .b-goal span,.mod.inf.hit .b-goal strong,.mod.inf.hit .note-mini{color:var(--ok-ink)}
@@ -1526,6 +1528,7 @@ function renderSim(){
   var hb=document.getElementById('sim-hint');
   hb.textContent=h;hb.hidden=good;
   document.getElementById('sim-ok').hidden=!good;
+  document.getElementById('console').classList.toggle('okall',good);
   if(good){
     if(!SIM.counted){SIM.counted=true;SIMDONE++;LS.set('simdone',SIMDONE);}
     document.getElementById('sim-ok-sub').textContent='La consola quedó en nivel nominal y el volumen se decidió en '+(cfgA.value==='active'?'el altavoz activo':'el amplificador')+'.'+(SIMDONE>0?' Ajustes logrados hasta ahora: '+SIMDONE+'.':'');
