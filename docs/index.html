@@ -1762,7 +1762,7 @@ SIM.bgain=0;
 function bD(x){return x+(sc().dig?0:18);}
 function bF(x){var d=sc().dig;return fmtDb(d?x:x+18)+(d?' dBFS':'');}
 function bLevels(){var I=INST[BS.i],pk=BS.pk+SIM.bgain;return {pk:pk,avg:pk-I.crest};}
-function bZone(I){return I.t==='rms'?[-22,-18]:[-14,-10];}
+function bZone(I){return I.t==='rms'?[-22,-18]:[-12,-8];}
 function bOk(L,I){if(I.t==='rms'){return L.avg>=-22&&L.avg<=-18&&L.pk+I.tp<-0.5;}return L.pk>=-12&&L.pk<=-8&&L.pk+I.tp<-0.5;}
 function bScopeSvg(c,I){
   return '<svg viewBox="0 0 240 90" role="img" aria-label="Historial del medidor de los últimos seis segundos"><polyline id="sc-line" fill="none" style="stroke:var(--led-b)" stroke-width="2" stroke-linejoin="round" points=""/></svg>';
