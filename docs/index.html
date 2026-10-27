@@ -499,7 +499,7 @@ details.direct>summary{cursor:pointer;font-weight:600;color:var(--accent);min-he
     </div>
     <div class="resume" id="resume" hidden>
       <span id="resume-t"></span>
-      <button class="btn sm" id="resume-b" type="button" data-go="ajuste:guia" data-scroll="1">Continuar</button>
+      <button class="btn sm" id="resume-b" type="button" data-go="ajuste:guia/3" data-scroll="1">Continuar</button>
     </div>
     <details class="gloss">
       <summary>Palabras que vas a ver</summary>
@@ -529,7 +529,7 @@ details.direct>summary{cursor:pointer;font-weight:600;color:var(--accent);min-he
   </div>
 
   <div id="s-conexiones" class="section" role="tabpanel" aria-labelledby="m-conexiones" hidden>
-  <div class="intro">
+  <div class="intro" data-sub="r1">
     <h2>Señales y conexiones</h2>
     <p class="lead">Un cable puede encajar y aun así ser la conexión equivocada. Acá aprendés qué tipo de señal sale de cada equipo, cuál espera cada entrada y qué pasa si se mezclan.</p>
   </div>
@@ -581,23 +581,23 @@ details.direct>summary{cursor:pointer;font-weight:600;color:var(--accent);min-he
 
   <!-- 3. RECONOCER -->
   <section class="panel" id="p-reconocer" role="tabpanel" aria-labelledby="t-reconocer">
-    <div class="card">
+    <div class="card" data-sub="r1">
       <h2>El conector no dice qué señal lleva</h2>
       <p class="lead">Un conector XLR puede ser la salida de un micrófono (señal muy débil) o la salida de una consola (señal fuerte). Lo que importa es el nombre del puerto y lo que dice el manual.</p>
     </div>
-    <div class="card">
+    <div class="card" data-sub="r1">
       <h2>Cómo se ven los conectores</h2>
       <p class="lead">Dibujos de referencia de los cables que vas a usar. Fijate en las bandas negras del jack: una sola es TS, dos son TRS.</p>
       <div class="plugs" id="plugs"></div>
       <p class="note">Los conectores pueden variar de un equipo a otro. Si dudás, comparalo con el dibujo del manual.</p>
     </div>
-    <h2 class="group-title">Entradas</h2>
-    <div class="glossary" id="g-in"></div>
-    <h2 class="group-title">Salidas</h2>
-    <div class="glossary" id="g-out"></div>
-    <h2 class="group-title">Botones y perillas relacionados</h2>
-    <div class="glossary" id="g-sw"></div>
-    <div class="card">
+    <h2 class="group-title" data-sub="r2">Entradas</h2>
+    <div class="glossary" id="g-in" data-sub="r2"></div>
+    <h2 class="group-title" data-sub="r2">Salidas</h2>
+    <div class="glossary" id="g-out" data-sub="r2"></div>
+    <h2 class="group-title" data-sub="r3">Botones y perillas relacionados</h2>
+    <div class="glossary" id="g-sw" data-sub="r3"></div>
+    <div class="card" data-sub="r3">
       <h2>Qué buscar en el manual</h2>
       <p class="lead">Casi todo se confirma en la tabla de especificaciones. Estos son los datos que importan.</p>
       <div class="glossary" id="g-man"></div>
@@ -624,12 +624,12 @@ details.direct>summary{cursor:pointer;font-weight:600;color:var(--accent);min-he
 
   <!-- MÓDULO: AJUSTE DEL SISTEMA -->
   <div id="s-ajuste" class="section" role="tabpanel" aria-labelledby="m-ajuste">
-    <div class="intro">
+    <div class="intro" data-sub="a1">
       <h2>Ajuste de nivel del sistema</h2>
       <p class="lead">La consola trabaja en su punto de referencia (lo que se llama “ganancia unitaria”: la señal ni sube ni baja) y el volumen final se decide en el amplificador o en los altavoces activos. Es un punto de partida: después se afina de oído. Los valores de referencia (0 dBu, −18 dBFS, faders en 0 dB) son aproximados: una diferencia de unos ±2 dB se considera válida.</p>
     </div>
 
-    <div class="card">
+    <div class="card" data-sub="a1 ap">
       <h3>Tu sistema</h3>
       <div class="cfg">
         <div class="pick-col">
@@ -661,19 +661,19 @@ details.direct>summary{cursor:pointer;font-weight:600;color:var(--accent);min-he
     </nav>
 
     <section class="panel" id="a-guia" role="tabpanel" aria-labelledby="at-guia">
-    <div class="card">
+    <div class="card" data-sub="a1">
       <h3>El camino de la señal</h3>
       <div class="chain" id="chain"></div>
       <p class="note" id="chain-note"></p>
     </div>
 
-    <div class="card">
+    <div class="card" data-sub="a2">
       <h3>Dónde debe estar el medidor</h3>
       <div class="meter" id="meter"></div>
       <p class="note" id="meter-note"></p>
     </div>
 
-    <div class="card">
+    <div class="card" data-sub="a3">
       <div class="prog-top"><h3>Paso a paso</h3><span class="score" id="prog-text"></span></div>
       <div class="prog"><div class="prog-fill" id="prog-fill"></div></div>
       <div class="row-actions">
@@ -2055,17 +2055,28 @@ function showSection(name){
   if(name==='inicio'){updateResume();}
 }
 var STEPS=[
- {g:'conexiones:reconocer',st:1,n:'Reconocer conectores'},
+ {g:'conexiones:reconocer',sub:'r1',st:1,n:'Reconocer conectores'},
+ {g:'conexiones:reconocer/2',sub:'r2',st:1,n:'Entradas y salidas'},
+ {g:'conexiones:reconocer/3',sub:'r3',st:1,n:'Botones y qué buscar en el manual'},
  {g:'conexiones:niveles',st:1,n:'Niveles de señal'},
  {g:'conexiones:compatibilidad',st:1,n:'¿Esto va con aquello?'},
  {g:'conexiones:practica',st:1,n:'Practicar las conexiones'},
- {g:'ajuste:guia',st:2,n:'Ajuste paso a paso'},
- {g:'ajuste:practica',st:2,n:'Practicar el ajuste'},
+ {g:'ajuste:guia',sub:'a1',st:2,n:'Tu sistema y el camino de la señal'},
+ {g:'ajuste:guia/2',sub:'a2',st:2,n:'Dónde debe estar el medidor'},
+ {g:'ajuste:guia/3',sub:'a3',st:2,n:'Ajuste paso a paso'},
+ {g:'ajuste:practica',sub:'ap',st:2,n:'Practicar el ajuste'},
  {g:'canales',st:3,n:'Cómo se ajusta cada instrumento'},
  {g:'canales:practica',st:3,n:'Practicar canal por canal'}
 ];
+function applySub(sub){
+  var els=document.querySelectorAll('[data-sub]');
+  for(var i=0;i<els.length;i++){
+    var list=' '+els[i].getAttribute('data-sub')+' ';
+    els[i].hidden=!(sub&&list.indexOf(' '+sub+' ')>=0);
+  }
+}
 var STAGES=['Conexiones','Nivel del sistema','Canales'];
-var MAXS=(function(){var v=LS.get('maxstep');return (typeof v==='number'&&v>=0&&v<8)?v:0;})();
+var MAXS=(function(){var v=LS.get('maxstep2');return (typeof v==='number'&&v>=0&&v<STEPS.length)?v:0;})();
 var CUR=-1;
 function heroBtn(){
   var b=document.getElementById('hero-btn');if(!b){return;}
@@ -2085,7 +2096,7 @@ function updateRoute(idx){
   var route=document.getElementById('route'),nav=document.getElementById('stepnav');
   CUR=idx;
   if(idx<0){route.hidden=true;nav.hidden=true;heroBtn();return;}
-  if(idx>MAXS){MAXS=idx;LS.set('maxstep',MAXS);}
+  if(idx>MAXS){MAXS=idx;LS.set('maxstep2',MAXS);}
   LS.set('started',true);
   route.hidden=false;nav.hidden=false;
   var cur=STEPS[idx],h='<div class="route-st">',k;
@@ -2108,7 +2119,8 @@ function go(target,scrollNow){
   if(String(target)==='ajuste:banda'){target='canales';}
   for(q=0;q<STEPS.length;q++){if(STEPS[q].g===String(target)){idx=q;}}
   if(idx>=0&&!(idx<=MAXS||(idx===MAXS+1&&CUR===MAXS))){idx=MAXS;target=STEPS[MAXS].g;}
-  var p=String(target).split(':');
+  var p=String(target).split(':');if(p[1]){p[1]=p[1].split('/')[0];}
+  applySub(idx>=0?STEPS[idx].sub:null);
   if(p[0]==='canales'){showCanales(p[1]);}
   if(p[0]==='ajuste'&&p[1]==='banda'){showSection('canales');}
   else if(p[0]==='ajuste'){showSection('ajuste');showA(p[1]);}
