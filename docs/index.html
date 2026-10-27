@@ -436,6 +436,30 @@ details.help p{margin:0 0 8px;max-width:62ch}
 .like-n{color:var(--muted);font-size:.95rem}
 footer{font-size:.9rem;color:var(--muted);border-top:1px solid var(--line);padding-top:14px;display:flex;flex-direction:column;gap:6px}
 @media all{.fill{transition:width .4s ease}}
+
+/* ---- Recorrido guiado ---- */
+.mainnav,nav.tabs{display:none}
+.route{position:sticky;top:0;z-index:30;background:var(--bg);padding:10px 0 12px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:8px}
+.route-st{display:flex;gap:8px}
+.rst{flex:1 1 0;min-width:0;text-align:left;background:none;border:0;padding:0;font:inherit;cursor:pointer;color:var(--muted);display:flex;flex-direction:column;gap:6px;min-height:44px;justify-content:flex-end}
+.rst .bar{height:7px;border-radius:4px;background:var(--line);overflow:hidden}
+.rst .bar i{display:block;height:100%;width:0;background:var(--accent);border-radius:4px;transition:width .3s}
+.rst.done .bar i{width:100%;background:var(--g)}
+.rst.locked{opacity:.5;cursor:not-allowed}
+.rst .lab{font-size:.8rem;font-weight:600;line-height:1.2}
+.rst[aria-current="step"]{color:var(--ink)}
+.route-now{font-size:.95rem;color:var(--muted)}
+.route-now b{color:var(--ink)}
+.stepnav{display:flex;gap:12px;justify-content:space-between;align-items:stretch;border-top:1px solid var(--line);padding-top:16px}
+.stepnav .btn{align-self:auto;flex:1 1 0;min-height:56px;font-size:1rem}
+.stepnav .btn.next{flex:2 1 0}
+.hero{display:flex;flex-direction:column;gap:14px;padding:8px 0 4px}
+.hero h2{font-family:var(--font-display);font-weight:800;font-size:1.7rem;line-height:1.15;margin:0}
+.hero .btn{align-self:stretch;min-height:60px;font-size:1.15rem}
+.hero-steps{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+.hero-steps li{display:flex;gap:12px;align-items:center}
+.hero-steps b{width:34px;height:34px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;flex:none;font-family:var(--font-display)}
+details.direct>summary{cursor:pointer;font-weight:600;color:var(--accent);min-height:44px;display:flex;align-items:center}
 </style>
 </head>
 <body>
@@ -460,41 +484,22 @@ footer{font-size:.9rem;color:var(--muted);border-top:1px solid var(--line);paddi
     <button class="mn" role="tab" id="m-canales" aria-controls="s-canales" aria-selected="false" data-sec="canales">Ajuste de canales</button>
   </nav>
 
+  <div class="route" id="route" hidden></div>
+
   <div id="s-inicio" class="section" role="tabpanel" aria-labelledby="m-inicio">
-    <div class="intro">
-      <h2>¿Qué querés hacer?</h2>
-      <p class="lead">Elegí una tarea. No hace falta ser experto para empezar, y las prácticas son simulaciones: no podés romper nada.</p>
+    <div class="hero">
+      <h2>Te acompaño paso a paso</h2>
+      <p class="lead">Son 3 etapas y de a una cosa por vez. Las prácticas son simulaciones: no podés romper nada.</p>
+      <ol class="hero-steps">
+        <li><b>1</b><span>Entender las conexiones</span></li>
+        <li><b>2</b><span>Ajustar el nivel general del sistema</span></li>
+        <li><b>3</b><span>Trabajar canal por canal</span></li>
+      </ol>
+      <button class="btn" id="hero-btn" type="button" data-go="conexiones:reconocer">Empezar el recorrido</button>
     </div>
     <div class="resume" id="resume" hidden>
       <span id="resume-t"></span>
       <button class="btn sm" id="resume-b" type="button" data-go="ajuste:guia" data-scroll="1">Continuar</button>
-    </div>
-    <div class="tasks">
-      <button class="task" type="button" data-go="ajuste:guia">
-        <span class="task-kicker">Armar el sistema</span>
-        <span class="task-title">Dejar el sonido listo para la reunión</span>
-        <span class="task-desc">Siete pasos, de la consola al amplificador, con una lista para ir tildando.</span>
-      </button>
-      <button class="task" type="button" data-go="conexiones:compatibilidad">
-        <span class="task-kicker">Conectar equipos</span>
-        <span class="task-title">¿Este cable va acá?</span>
-        <span class="task-desc">Elegí qué sale y dónde entra, y el semáforo te dice si se puede.</span>
-      </button>
-      <button class="task" type="button" data-go="ajuste:practica">
-        <span class="task-kicker">Practicar</span>
-        <span class="task-title">Ajustar una consola simulada</span>
-        <span class="task-desc">Practica con perillas y faders simulados. Un oyente te muestra cómo suena tu ajuste.</span>
-      </button>
-      <button class="task" type="button" data-go="canales">
-        <span class="task-kicker">Practicar</span>
-        <span class="task-title">Ajustar los canales de la banda</span>
-        <span class="task-desc">Voz, teclado, guitarras, bajo y batería: cada uno se ajusta distinto.</span>
-      </button>
-      <button class="task" type="button" data-go="conexiones:practica">
-        <span class="task-kicker">Practicar</span>
-        <span class="task-title">Quiz del semáforo</span>
-        <span class="task-desc">Rondas de 10 conexiones para entrenar el ojo.</span>
-      </button>
     </div>
     <details class="gloss">
       <summary>Palabras que vas a ver</summary>
@@ -829,6 +834,8 @@ footer{font-size:.9rem;color:var(--muted);border-top:1px solid var(--line);paddi
       </div>
     </div>
   </div>
+
+  <div class="stepnav" id="stepnav" hidden></div>
 
   <footer>
     <span>Son reglas generales para empezar. Cada equipo puede variar, consultá siempre los manuales. Versión de prueba, contenido en revisión.</span>
@@ -2047,8 +2054,62 @@ function showSection(name){
   rove(mains);
   if(name==='inicio'){updateResume();}
 }
+var STEPS=[
+ {g:'conexiones:reconocer',st:1,n:'Reconocer conectores'},
+ {g:'conexiones:niveles',st:1,n:'Niveles de señal'},
+ {g:'conexiones:compatibilidad',st:1,n:'¿Esto va con aquello?'},
+ {g:'conexiones:practica',st:1,n:'Practicar las conexiones'},
+ {g:'ajuste:guia',st:2,n:'Ajuste paso a paso'},
+ {g:'ajuste:practica',st:2,n:'Practicar el ajuste'},
+ {g:'canales',st:3,n:'Cómo se ajusta cada instrumento'},
+ {g:'canales:practica',st:3,n:'Practicar canal por canal'}
+];
+var STAGES=['Conexiones','Nivel del sistema','Canales'];
+var MAXS=(function(){var v=LS.get('maxstep');return (typeof v==='number'&&v>=0&&v<8)?v:0;})();
+var CUR=-1;
+function heroBtn(){
+  var b=document.getElementById('hero-btn');if(!b){return;}
+  var started=MAXS>0||LS.get('started')===true;
+  b.textContent=started?'Continuar donde lo dejé (paso '+(MAXS+1)+' de '+STEPS.length+')':'Empezar el recorrido';
+  b.setAttribute('data-go',STEPS[MAXS].g);
+}
+function esc(t){return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+function showCanales(sub){
+  var prac=(sub==='practica');
+  var banda=document.getElementById('a-banda'),kids=banda.children;
+  var consola=document.querySelector('#s-canales > .card');
+  if(consola){consola.hidden=!prac;}
+  for(var i=0;i<kids.length;i++){kids[i].hidden=prac?(i===0):(i!==0);}
+}
+function updateRoute(idx){
+  var route=document.getElementById('route'),nav=document.getElementById('stepnav');
+  CUR=idx;
+  if(idx<0){route.hidden=true;nav.hidden=true;heroBtn();return;}
+  if(idx>MAXS){MAXS=idx;LS.set('maxstep',MAXS);}
+  LS.set('started',true);
+  route.hidden=false;nav.hidden=false;
+  var cur=STEPS[idx],h='<div class="route-st">',k;
+  for(k=1;k<=3;k++){
+    var ids=[],j;for(j=0;j<STEPS.length;j++){if(STEPS[j].st===k){ids.push(j);}}
+    var first=ids[0],last=ids[ids.length-1];
+    var done=idx>last,now=(cur.st===k);
+    var pct=done?100:(now?Math.round((idx-first)/ids.length*100):0);
+    var locked=first>MAXS;
+    h+='<button type="button" class="rst'+(done?' done':'')+(locked?' locked':'')+'"'+(locked?' disabled aria-label="'+k+' · '+STAGES[k-1]+' (se desbloquea al avanzar)"':' data-go="'+STEPS[first].g+'"')+(now?' aria-current="step"':'')+'><span class="bar"><i style="width:'+pct+'%"></i></span><span class="lab">'+(done?'✓ ':'')+k+' · '+STAGES[k-1]+'</span></button>';
+  }
+  h+='</div><div class="route-now">Paso <b>'+(idx+1)+' de '+STEPS.length+'</b> · '+esc(cur.n)+'</div>';
+  route.innerHTML=h;
+  var prev=idx>0?STEPS[idx-1]:null,next=idx<STEPS.length-1?STEPS[idx+1]:null;
+  nav.innerHTML='<button type="button" class="btn ghost" data-go="'+(prev?prev.g:'inicio')+'">← '+(prev?'Atrás':'Inicio')+'</button>'
+   +'<button type="button" class="btn next" data-go="'+(next?next.g:'inicio')+'">'+(next?'Siguiente: '+esc(next.n)+' →':'Terminar ✓')+'</button>';
+}
 function go(target,scrollNow){
+  var idx=-1,q;
+  if(String(target)==='ajuste:banda'){target='canales';}
+  for(q=0;q<STEPS.length;q++){if(STEPS[q].g===String(target)){idx=q;}}
+  if(idx>=0&&!(idx<=MAXS||(idx===MAXS+1&&CUR===MAXS))){idx=MAXS;target=STEPS[MAXS].g;}
   var p=String(target).split(':');
+  if(p[0]==='canales'){showCanales(p[1]);}
   if(p[0]==='ajuste'&&p[1]==='banda'){showSection('canales');}
   else if(p[0]==='ajuste'){showSection('ajuste');showA(p[1]);}
   else if(p[0]==='canales'){showSection('canales');}
@@ -2056,8 +2117,9 @@ function go(target,scrollNow){
   else{showSection('inicio');}
   if(scrollNow){
     var nx=document.querySelector('#asteps .astep.now');
-    if(nx){nx.scrollIntoView({block:'start',behavior:reduced()?'auto':'smooth'});return;}
+    if(nx){updateRoute(idx);nx.scrollIntoView({block:'start',behavior:reduced()?'auto':'smooth'});return;}
   }
+  updateRoute(idx);
   window.scrollTo(0,0);
 }
 for(var ai=0;ai<atabs.length;ai++){atabs[ai].addEventListener('click',function(){showA(this.getAttribute('data-atab'));});}
